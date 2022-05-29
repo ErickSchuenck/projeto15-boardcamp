@@ -35,7 +35,7 @@ export async function getCustomersById(req, res) {
       SELECT * FROM customers WHERE id = $1;
       `, [id]
     )
-    res.send(result.rows)
+    res.send(result.rows[0])
   }
   catch (error) {
     res.send(error)
