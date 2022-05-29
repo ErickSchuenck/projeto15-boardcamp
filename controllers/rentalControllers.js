@@ -1,4 +1,5 @@
 import connection from '../db.js'
+import dayjs from 'dayjs'
 
 export async function getRentals(req, res) {
   const { customerId, gameId } = req.params
@@ -7,8 +8,8 @@ export async function getRentals(req, res) {
       const result = await connection.query(
         `
         SELECT *
-        FROM customers
-        WHERE id = {$1};
+        FROM rentals
+        WHERE customerId = {$1};
         ` [customerId]
       )
       res.send(result.rows)
@@ -22,8 +23,8 @@ export async function getRentals(req, res) {
       const result = await connection.query(
         `
         SELECT *
-        FROM games
-        WHERE id = {$1};
+        FROM rentals
+        WHERE gameId = {$1};
         ` [gameId]
       )
       res.send(result.rows)
@@ -35,7 +36,7 @@ export async function getRentals(req, res) {
     const result = await connection.query(
       `
         SELECT *
-        FROM customers;
+        FROM rentals;
         `
     )
     res.send(result.rows)
@@ -47,12 +48,15 @@ export async function getRentals(req, res) {
 
 export async function postRentals(req, res) {
   const { customerId, gameId, daysRented } = req.body
+  const rentDate = dayjs().format('YYYY-MM-DD')
+  const returnDate = null;
+
   try {
     await connection.query(
       `
-      INSERT INTO rentals ("customerId", "gameId", "daysRented")
+      INSERT INTO rentals ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee")
       VALUES ($1, $2, $3);
-      `, [customerId, gameId, daysRented]
+      `, [customerId, gameId, rentDate, daysRented, returnDate, originalPrice, delayFee]
     )
     res.sendStatus(201)
   }
