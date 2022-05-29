@@ -5,16 +5,16 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import categoriesRouter from "./routers/categoriesRouter.js";
-import clientsRouter from "./routers/clientsRouter.js"
+import customersRouter from "./routers/customersRouters.js"
 import gamesRouter from "./routers/gamesRouter.js";
-import rentRouter from "./routers/rentRouter.js";
+import rentRouter from "./routers/rentalRouter.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.use(categoriesRouter);
-app.use(clientsRouter);
+app.use(customersRouter);
 app.use(gamesRouter);
 app.use(rentRouter);
 

@@ -1,5 +1,5 @@
 import express from 'express'
-import { getRentals, postRentals, finishRentals, deleteRentals } from '../controllers/rentalControllers'
+import { getRentals, postRentals, finishRentals, deleteRentals } from '../controllers/rentalControllers.js'
 const userRoutes = express.Router()
 
 userRoutes.get('/rentals', getRentals)
