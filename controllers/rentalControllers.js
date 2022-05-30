@@ -49,20 +49,30 @@ export async function getRentals(req, res) {
 export async function postRentals(req, res) {
   const { customerId, gameId, daysRented } = req.body
   const rentDate = dayjs().format('YYYY-MM-DD')
-  const returnDate = null;
 
-  try {
-    await connection.query(
-      `
-      INSERT INTO rentals ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee")
-      VALUES ($1, $2, $3);
-      `, [customerId, gameId, rentDate, daysRented, returnDate, originalPrice, delayFee]
-    )
-    res.sendStatus(201)
-  }
-  catch (error) {
-    res.send(error)
-  }
+  const pricePerDay = await connection.query(
+    `
+    SELECT pricePerDay FROM games WHERE id = $1
+    `, [gameId]
+  )
+
+  res.send(pricePerDay)
+
+
+  // const returnDate = null;
+
+  // try {
+  //   await connection.query(
+  //     `
+  //     INSERT INTO rentals ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee")
+  //     VALUES ($1, $2, $3);
+  //     `, [customerId, gameId, rentDate, daysRented, returnDate, originalPrice, delayFee]
+  //   )
+  //   res.sendStatus(201)
+  // }
+  // catch (error) {
+  //   res.send(error)
+  // }
 };
 
 export async function finishRentals(req, res) {

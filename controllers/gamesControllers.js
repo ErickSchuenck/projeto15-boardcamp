@@ -3,7 +3,7 @@ import connection from '../db.js'
 
 export async function getGames(req, res) {
   const { name } = req.query;
-  if (!name) {
+  if (name === undefined) {
     try {
       const result = await connection.query(
         `

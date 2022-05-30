@@ -1,7 +1,7 @@
-import joi, { func } from 'joi'
-import connection from '../db.js'
+import joi from 'joi'
+// import connection from '../db.js'
 import DateExtension from '@joi/date';
-import res from 'express/lib/response';
+import res from 'express/lib/response.js';
 const Joi = joi.extend(DateExtension);
 
 const CPF_REGEX = /^[0-9]{11,11}$/;
@@ -14,9 +14,11 @@ const customersSchema = joi.object({
   birthday: Joi.date().format('YYYY-MM-DD').required(),
 });
 
-export async function customerMiddleware() {
+export async function customersMiddleware(req, res, next) {
+  console.log('entrou')
   const validation = customersSchema.validate(req.body)
   if (validation.error) {
+    console.log(validation.error)
     return res.sendStatus(400)
   }
   else {
@@ -24,7 +26,7 @@ export async function customerMiddleware() {
   }
 }
 
-export async function updateCustomerMiddleware() {
+export async function updateCustomersMiddleware(req, res, next) {
   const validation = customersSchema.validate(req.body)
   if (validation.error) {
     return res.sendStatus(200)
