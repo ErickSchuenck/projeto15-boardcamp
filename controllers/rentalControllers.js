@@ -95,7 +95,16 @@ export async function postRentals(req, res) {
 }
 
 export async function finishRentals(req, res) {
-  const { id } = req.params;
+  // const { id } = req.params;
+  // const idExists = await connection.query(`
+  //   SELECT * from RENTALS WHERE id = $1
+  // `, [id]
+  // )
+  // console.log(idExists.rows)
+  // if (idExists.rows.length === 0) {
+  //   return res.sendStatus(404)
+  // }
+  // const returnDate = dayjs(Date.now()).format('YYYY-MM-DD');
 }
 
 export async function deleteRentals(req, res) {
