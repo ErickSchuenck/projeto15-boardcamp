@@ -12,7 +12,6 @@ const schema = joi.object({
 export async function gamesMiddleware(req, res, next) {
   const validation = schema.validate(req.body)
   if (validation.error) {
-    console.log(validation.error)
     return res.sendStatus(400);
   }
 
@@ -25,8 +24,11 @@ export async function gamesMiddleware(req, res, next) {
     if (result.rows.length > 0) {
       return res.sendStatus(409);
     }
-  } catch (err) {
+    next();
+  }
+
+  catch (err) {
     res.send(err);
   }
-  next();
+
 };
